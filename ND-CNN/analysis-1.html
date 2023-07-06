@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CNN</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anonymous+Pro&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Antic+Slab&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aubrey&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=B612+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titan+One&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/Article-Dual-Column.css">
+    <link rel="stylesheet" href="assets/css/Articles-Cards-images.css">
+    <link rel="stylesheet" href="assets/css/Clean-Message-Input-Box-With-Char-Counter.css">
+    <link rel="stylesheet" href="assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="assets/css/iframe.css">
+    <link rel="stylesheet" href="assets/css/Tabbed-Panel.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid"><a class="navbar-brand" href="index.html"><strong><span style="color: var(--bs-navbar-brand-hover-color);">Newcastle Disease Monitoring |</span></strong></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html" style="margin-left: 200px;">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data.html">Available Data</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="analysis.html">Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="epochs.html"><span style="color: var(--bs-nav-link-hover-color);">Epochs</span>&nbsp;Status</a></li>
+                    <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section style="margin-top: 30px;padding-right: 20px;padding-left: 20px;">
+        <h5>Convolutional Neural Network Analysis - Machine Learning</h5>
+        <div class="panel panel-default">
+            <ul class="nav nav-tabs panel-heading" role="tablist">
+                <li class="nav-item" role="presentation"><a class="nav-link visually-hidden" role="tab" data-bs-toggle="tab" data-toggle="tab" href="#tab-1" style="font-size: 14px;">Convolutional Neural Network (CNN)</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link active visible" role="tab" data-bs-toggle="tab" data-toggle="tab" style="font-size: 14px;" href="#tab-2">Result of Analysis</a></li>
+            </ul>
+            <div class="tab-content panel-body">
+                <div class="tab-pane" role="tabpanel" id="tab-1">
+                    <div class="alert alert-success alert-dismissible" role="alert" style="font-size: 12px;margin-top: 20px;"><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button><span><strong>Supported </strong>File Formats: .jpg, .jpeg, .png</span></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p style="margin-top: 10px;font-weight: bold;">Data Class 1 - Train Model</p><select class="form-select-lg" style="font-size: 15px;border-radius: 2px;">
+                                    <option value="12" selected="">Train Model (Newcastle Disease)</option>
+                                    <option value="13">Train Model (Healthy)</option>
+                                </select>
+                                <hr style="height: 0.5px;"><label class="form-label" for="customFile">Upload Image File for Analysis</label>
+<input type="file" class="form-control" id="customFile" />
+<a class="btn btn-primary" role="button" href="#tab-2" style="margin-top: 20px;border-radius: 2px;border-width: 1.5px;border-color: var(--bs-success);background: var(--bs-btn-disabled-color);color: var(--bs-success);">Run Analysis</a>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="margin-top: 10px;font-weight: bold;">Data Class 2 - Test Model</p><select class="form-select-lg" style="font-size: 15px;border-radius: 2px;">
+                                    <option value="12" selected="">Test Model (Newcastle Disease)</option>
+                                    <option value="13">Test Model (Healthy)</option>
+                                </select>
+                                <hr style="height: 0.5px;"><label class="form-label" for="customFile">Upload Image File for Analysis</label>
+<input type="file" class="form-control" id="customFile" /><a class="btn btn-primary" role="button" href="#tab-2" style="margin-top: 20px;background: var(--bs-btn-disabled-color);color: var(--bs-success);border-radius: 2px;border-width: 1.5px;border-color: var(--bs-success);">Run Analysis</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane active" role="tabpanel" id="tab-2">
+                    <div class="alert alert-success alert-dismissible" role="alert" style="font-size: 12px;margin-top: 20px;"><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button><span><strong>Result:&nbsp;</strong>Google Colab Notebooks</span></div>
+                    <hr>
+                    <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: rgb(26, 26, 26);">Total params: 21,905,186</span><br><span style="color: rgb(26, 26, 26);">Trainable params: 21,870,754</span><br><span style="color: rgb(26, 26, 26);">Non-trainable params: 34,432</span></p>
+                    <hr>
+                    <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: rgb(102, 102, 102); background-color: transparent;">!</span><span style="color: inherit; background-color: transparent;">nvidia</span><span style="color: rgb(102, 102, 102); background-color: transparent;">-</span><span style="color: inherit; background-color: transparent;">smi&nbsp;</span><span style="color: rgb(26, 26, 26);">Mon Jun 10 08:19:47 2023 </span><br><span style="color: rgb(26, 26, 26);">+-----------------------------------------------------------------------------+</span><br><span style="color: rgb(26, 26, 26);">| NVIDIA-SMI 460.32.03 Driver Version: 460.32.03 CUDA Version: 11.2 |</span><br><span style="color: rgb(26, 26, 26);">|-------------------------------+----------------------+----------------------+</span><br><span style="color: rgb(26, 26, 26);">| GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC |</span><br><span style="color: rgb(26, 26, 26);">| Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. |</span><br><span style="color: rgb(26, 26, 26);">| | | MIG M. |</span><br><span style="color: rgb(26, 26, 26);">|===============================+======================+======================|</span><br><span style="color: rgb(26, 26, 26);">| 0 Tesla T4 Off | 00000000:00:04.0 Off | 0 |</span><br><span style="color: rgb(26, 26, 26);">| N/A 53C P0 27W / 70W | 0MiB / 15109MiB | 0% Default |</span><br><span style="color: rgb(26, 26, 26);">| | | N/A |</span><br><span style="color: rgb(26, 26, 26);">+-------------------------------+----------------------+----------------------+</span><br><span style="color: rgb(26, 26, 26);"> </span><br><span style="color: rgb(26, 26, 26);">+-----------------------------------------------------------------------------+</span><br><span style="color: rgb(26, 26, 26);">| Processes: |</span><br><span style="color: rgb(26, 26, 26);">| GPU GI CI PID Type Process name GPU Memory |</span><br><span style="color: rgb(26, 26, 26);">| ID ID Usage |</span><br><span style="color: rgb(26, 26, 26);">|=============================================================================|</span><br><span style="color: rgb(26, 26, 26);">| No running processes found |</span><br><span style="color: rgb(26, 26, 26);">+-----------------------------------------------------------------------------+</span></p>
+                    <hr>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p style="font-size: 14px;font-family: 'Fira Mono', monospace;"><span style="color: inherit; background-color: transparent;">model.</span><span style="color: rgb(0, 128, 0); background-color: transparent;">compile</span><span style="color: inherit; background-color: transparent;">( loss</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 112, 160); background-color: transparent;">'categorical_crossentropy'</span><span style="color: inherit; background-color: transparent;">, optimizer</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 112, 160); background-color: transparent;">'adam'</span><span style="color: inherit; background-color: transparent;">, metrics</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 112, 160); background-color: transparent;">'accuracy'</span><span style="color: inherit; background-color: transparent;">)</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><strong><span style="color: rgb(0, 128, 0); background-color: transparent;">from</span></strong><span style="color: inherit; background-color: transparent;"> tensorflow.keras.preprocessing.image </span><strong><span style="color: rgb(0, 128, 0); background-color: transparent;">import</span></strong><span style="color: inherit; background-color: transparent;"> ImageDataGenerator</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: inherit; background-color: transparent;">train_datagen </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> ImageDataGenerator(rescale</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 160, 112); background-color: transparent;">1.</span><span style="color: rgb(102, 102, 102); background-color: transparent;">/</span><span style="color: rgb(64, 160, 112); background-color: transparent;">255</span><span style="color: inherit; background-color: transparent;">, shear_range</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 160, 112); background-color: transparent;">0.2</span><span style="color: inherit; background-color: transparent;">, zoom_range</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 160, 112); background-color: transparent;">0.2</span><span style="color: inherit; background-color: transparent;">, horizontal_flip</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(25, 23, 124); background-color: transparent;">True</span><span style="color: inherit; background-color: transparent;">)</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: inherit; background-color: transparent;">test_datagen </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> ImageDataGenerator(rescale</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 160, 112); background-color: transparent;">1.</span><span style="color: rgb(102, 102, 102); background-color: transparent;">/</span><span style="color: rgb(64, 160, 112); background-color: transparent;">255</span><span style="color: inherit; background-color: transparent;">)</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: inherit; background-color: transparent;">training_set </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> train_datagen.flow_from_directory(</span><span style="color: rgb(64, 112, 160); background-color: transparent;">'/content/drive/MyDrive/Newcastle disease dataset/Train'</span><span style="color: inherit; background-color: transparent;">, target_size </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> (</span><span style="color: rgb(64, 160, 112); background-color: transparent;">224</span><span style="color: inherit; background-color: transparent;">, </span><span style="color: rgb(64, 160, 112); background-color: transparent;">224</span><span style="color: inherit; background-color: transparent;">), batch_size </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> </span><span style="color: rgb(64, 160, 112); background-color: transparent;">16</span><span style="color: inherit; background-color: transparent;">, class_mode </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> </span><span style="color: rgb(64, 112, 160); background-color: transparent;">'categorical'</span><span style="color: inherit; background-color: transparent;">)</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: rgb(26, 26, 26);">Found 1703 images belonging to 2 classes.</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: inherit; background-color: transparent;">test_set </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> test_datagen.flow_from_directory(</span><span style="color: rgb(64, 112, 160); background-color: transparent;">'/content/drive/MyDrive/Newcastle disease dataset/Test'</span><span style="color: inherit; background-color: transparent;">, target_size </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> (</span><span style="color: rgb(64, 160, 112); background-color: transparent;">224</span><span style="color: inherit; background-color: transparent;">, </span><span style="color: rgb(64, 160, 112); background-color: transparent;">224</span><span style="color: inherit; background-color: transparent;">), batch_size </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> </span><span style="color: rgb(64, 160, 112); background-color: transparent;">16</span><span style="color: inherit; background-color: transparent;">, class_mode </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> </span><span style="color: rgb(64, 112, 160); background-color: transparent;">'categorical'</span><span style="color: inherit; background-color: transparent;">)</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: rgb(26, 26, 26);">Found 730 images belonging to 2 classes.</span></p>
+                                <p style="font-family: 'Fira Mono', monospace;font-size: 14px;"><span style="color: inherit; background-color: transparent;">r </span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;"> model.fit_generator( training_set, validation_data</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: inherit; background-color: transparent;">test_set, epochs</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(64, 160, 112); background-color: transparent;">10</span><span style="color: inherit; background-color: transparent;">, steps_per_epoch</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(0, 128, 0); background-color: transparent;">len</span><span style="color: inherit; background-color: transparent;">(training_set), validation_steps</span><span style="color: rgb(102, 102, 102); background-color: transparent;">=</span><span style="color: rgb(0, 128, 0); background-color: transparent;">len</span><span style="color: inherit; background-color: transparent;">(test_set))</span></p>
+                            </div>
+                            <div class="col">
+                                <h5 style="font-family: 'Fira Mono', monospace;font-size: 16px;">Training and Validation Curve</h5>
+                                <div class="text-center">
+                                    <div style="font-size: 14px;font-family: 'Fira Mono', monospace;"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Epoch 1/10&quot;,&quot;Epoch 2/10&quot;,&quot;Epoch 3/10&quot;,&quot;Epoch 4/10&quot;,&quot;Epoch 5/10&quot;,&quot;Epoch 6/10&quot;,&quot;Epoch 7/10&quot;,&quot;Epoch 8/10&quot;,&quot;Epoch 9/10&quot;,&quot;Epoch 10/10&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Value Accuracy&quot;,&quot;backgroundColor&quot;:&quot;rgba(0,0,0,0)&quot;,&quot;borderColor&quot;:&quot;#00563f&quot;,&quot;data&quot;:[&quot;0.1548&quot;,&quot;0.8452&quot;,&quot;0.8452&quot;,&quot;0.8452&quot;,&quot;0.8274&quot;,&quot;0.8452&quot;,&quot;0.8452&quot;,&quot;0.8452&quot;,&quot;0.8959&quot;,&quot;0.5616&quot;],&quot;fill&quot;:true,&quot;borderWidth&quot;:&quot;1.5&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;bold&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontFamily&quot;:&quot;'Fira Mono', monospace&quot;,&quot;fontStyle&quot;:&quot;normal&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontFamily&quot;:&quot;'Fira Mono', monospace&quot;,&quot;fontStyle&quot;:&quot;normal&quot;}}]}}}"></canvas></div>
+                                </div>
+                                <div class="text-center" style="margin-top: 30px;"><a class="btn btn-primary" role="button" style="border-radius: 2px;background: var(--bs-secondary);" href="vertopal.ipynb.html">Download Analysis</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr style="margin-top: 50px;">
+    <footer class="footer-clean">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Test Model</h3>
+                    <ul>
+                        <li><a href="#">Newcastle Disease</a></li>
+                        <li><a href="#">Healthy</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Train Model</h3>
+                    <ul>
+                        <li><a href="#">Newcastle Disease</a></li>
+                        <li><a href="#">Healthy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 item social">
+                    <p class="copyright" style="margin-top: 100px;">Newcastle Disease Monitoring © 2023</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/chart.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Sample---How-to-change-text-based-on-dropdown.js"></script>
+</body>
+
+</html>

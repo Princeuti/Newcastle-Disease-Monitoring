@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ed5eda9041eb4c2c80b38f83704fc138</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anonymous+Pro&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Antic+Slab&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aubrey&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=B612+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titan+One&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/Article-Dual-Column.css">
+    <link rel="stylesheet" href="assets/css/Articles-Cards-images.css">
+    <link rel="stylesheet" href="assets/css/Clean-Message-Input-Box-With-Char-Counter.css">
+    <link rel="stylesheet" href="assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="assets/css/iframe.css">
+    <link rel="stylesheet" href="assets/css/Tabbed-Panel.css">
+</head>
+
+<body>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="g3cSI0OD6xK3" data-outputid="57620c5f-c47c-4c06-811f-a81f4e0d90ca">
+        <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nvidia<span class="op">-</span>smi</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Tue Jan 10 14:19:47 2023       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 460.32.03    Driver Version: 460.32.03    CUDA Version: 11.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla T4            Off  | 00000000:00:04.0 Off |                    0 |
+| N/A   53C    P0    27W /  70W |      0MiB / 15109MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="2IK4bsTjCn-e" data-outputid="4a6dd43a-db1e-446b-eca6-969ec0e4e6b9">
+        <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Mounted at /content/drive
+</code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="-H0mYwe1B1n1" data-outputid="ca280c42-5430-46a7-fb81-38a8f2dd3ccb">
+        <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pip install noisereduce</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Collecting noisereduce
+  Downloading noisereduce-2.0.1-py3-none-any.whl (15 kB)
+Requirement already satisfied: scipy in /usr/local/lib/python3.8/dist-packages (from noisereduce) (1.7.3)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.8/dist-packages (from noisereduce) (4.64.1)
+Requirement already satisfied: librosa in /usr/local/lib/python3.8/dist-packages (from noisereduce) (0.8.1)
+Requirement already satisfied: numpy in /usr/local/lib/python3.8/dist-packages (from noisereduce) (1.21.6)
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.8/dist-packages (from noisereduce) (3.2.2)
+Requirement already satisfied: decorator&gt;=3.0.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (4.4.2)
+Requirement already satisfied: numba&gt;=0.43.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (0.56.4)
+Requirement already satisfied: audioread&gt;=2.0.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (3.0.0)
+Requirement already satisfied: resampy&gt;=0.2.2 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (0.4.2)
+Requirement already satisfied: soundfile&gt;=0.10.2 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (0.11.0)
+Requirement already satisfied: scikit-learn!=0.19.0,&gt;=0.14.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (1.0.2)
+Requirement already satisfied: pooch&gt;=1.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (1.6.0)
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (23.0)
+Requirement already satisfied: joblib&gt;=0.14 in /usr/local/lib/python3.8/dist-packages (from librosa-&gt;noisereduce) (1.2.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.8/dist-packages (from matplotlib-&gt;noisereduce) (3.0.9)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.8/dist-packages (from matplotlib-&gt;noisereduce) (0.11.0)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /usr/local/lib/python3.8/dist-packages (from matplotlib-&gt;noisereduce) (2.8.2)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.8/dist-packages (from matplotlib-&gt;noisereduce) (1.4.4)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/dist-packages (from numba&gt;=0.43.0-&gt;librosa-&gt;noisereduce) (57.4.0)
+Requirement already satisfied: importlib-metadata in /usr/local/lib/python3.8/dist-packages (from numba&gt;=0.43.0-&gt;librosa-&gt;noisereduce) (6.0.0)
+Requirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /usr/local/lib/python3.8/dist-packages (from numba&gt;=0.43.0-&gt;librosa-&gt;noisereduce) (0.39.1)
+Requirement already satisfied: requests&gt;=2.19.0 in /usr/local/lib/python3.8/dist-packages (from pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (2.25.1)
+Requirement already satisfied: appdirs&gt;=1.3.0 in /usr/local/lib/python3.8/dist-packages (from pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (1.4.4)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.8/dist-packages (from python-dateutil&gt;=2.1-&gt;matplotlib-&gt;noisereduce) (1.15.0)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /usr/local/lib/python3.8/dist-packages (from scikit-learn!=0.19.0,&gt;=0.14.0-&gt;librosa-&gt;noisereduce) (3.1.0)
+Requirement already satisfied: cffi&gt;=1.0 in /usr/local/lib/python3.8/dist-packages (from soundfile&gt;=0.10.2-&gt;librosa-&gt;noisereduce) (1.15.1)
+Requirement already satisfied: pycparser in /usr/local/lib/python3.8/dist-packages (from cffi&gt;=1.0-&gt;soundfile&gt;=0.10.2-&gt;librosa-&gt;noisereduce) (2.21)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests&gt;=2.19.0-&gt;pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (1.24.3)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests&gt;=2.19.0-&gt;pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (4.0.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests&gt;=2.19.0-&gt;pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (2022.12.7)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.8/dist-packages (from requests&gt;=2.19.0-&gt;pooch&gt;=1.0-&gt;librosa-&gt;noisereduce) (2.10)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.8/dist-packages (from importlib-metadata-&gt;numba&gt;=0.43.0-&gt;librosa-&gt;noisereduce) (3.12.0)
+Installing collected packages: noisereduce
+Successfully installed noisereduce-2.0.1
+</code></pre></div>
+    </div>
+    <div class="cell code" id="ArKRdg_AB8jp">
+        <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.io <span class="im">import</span> wavfile</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> noisereduce <span class="im">as</span> nr</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rate, data <span class="op">=</span> wavfile.read(<span class="st">"/content/drive/MyDrive/Newcastle disease dataset/Train"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># perform noise reduction</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>reduced_noise <span class="op">=</span> nr.reduce_noise(y<span class="op">=</span>data, sr<span class="op">=</span>rate)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>wavfile.write(<span class="st">"mywav_reduced_noise.wav"</span>, rate, reduced_noise)</span></code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="uo35TIFvDP8w" data-outputid="02e92c85-af83-4b11-9b2c-374a52b8b0d4">
+        <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tensorflow<span class="op">-</span>gpu</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Collecting tensorflow-gpu
+  Downloading tensorflow_gpu-2.11.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (588.3 MB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 588.3/588.3 MB 2.9 MB/s eta 0:00:00
+ent already satisfied: grpcio&lt;2.0,&gt;=1.24.3 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.51.1)
+Collecting keras&lt;2.12,&gt;=2.11.0
+  Downloading keras-2.11.0-py2.py3-none-any.whl (1.7 MB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 63.6 MB/s eta 0:00:00
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.0/6.0 MB 88.9 MB/s eta 0:00:00
+ent already satisfied: gast&lt;=0.4.0,&gt;=0.2.1 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (0.4.0)
+Requirement already satisfied: tensorflow-io-gcs-filesystem&gt;=0.23.1 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (0.29.0)
+Requirement already satisfied: wrapt&gt;=1.11.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.14.1)
+Requirement already satisfied: protobuf&lt;3.20,&gt;=3.9.2 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (3.19.6)
+Requirement already satisfied: termcolor&gt;=1.1.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (2.1.1)
+Collecting tensorflow-estimator&lt;2.12,&gt;=2.11.0
+  Downloading tensorflow_estimator-2.11.0-py2.py3-none-any.whl (439 kB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 439.2/439.2 KB 46.8 MB/s eta 0:00:00
+ent already satisfied: six&gt;=1.12.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.15.0)
+Requirement already satisfied: packaging in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (21.3)
+Requirement already satisfied: google-pasta&gt;=0.1.1 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (0.2.0)
+Requirement already satisfied: h5py&gt;=2.9.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (3.1.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (57.4.0)
+Requirement already satisfied: opt-einsum&gt;=2.3.2 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (3.3.0)
+Requirement already satisfied: typing-extensions&gt;=3.6.6 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (4.4.0)
+Collecting flatbuffers&gt;=2.0
+  Downloading flatbuffers-23.1.4-py2.py3-none-any.whl (26 kB)
+Requirement already satisfied: numpy&gt;=1.20 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.21.6)
+Requirement already satisfied: astunparse&gt;=1.6.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.6.3)
+Requirement already satisfied: absl-py&gt;=1.0.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (1.3.0)
+Requirement already satisfied: libclang&gt;=13.0.0 in /usr/local/lib/python3.8/dist-packages (from tensorflow-gpu) (14.0.6)
+Requirement already satisfied: wheel&lt;1.0,&gt;=0.23.0 in /usr/local/lib/python3.8/dist-packages (from astunparse&gt;=1.6.0-&gt;tensorflow-gpu) (0.38.4)
+Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (2.25.1)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (0.6.1)
+Requirement already satisfied: werkzeug&gt;=1.0.1 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (1.0.1)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (2.15.0)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (0.4.6)
+Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (3.4.1)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.8/dist-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (1.8.1)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /usr/local/lib/python3.8/dist-packages (from packaging-&gt;tensorflow-gpu) (3.0.9)
+Requirement already satisfied: cachetools&lt;6.0,&gt;=2.0.0 in /usr/local/lib/python3.8/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (5.2.0)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.8/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (0.2.8)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.8/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (4.9)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.8/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (1.3.1)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.8/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (5.2.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.8/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (2.10)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (4.0.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (2022.12.7)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (1.24.3)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.8/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (3.11.0)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.8/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (0.4.8)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.8/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow-gpu) (3.2.2)
+Installing collected packages: flatbuffers, tensorflow-estimator, keras, tensorboard, tensorflow-gpu
+  Attempting uninstall: flatbuffers
+    Found existing installation: flatbuffers 1.12
+    Uninstalling flatbuffers-1.12:
+      Successfully uninstalled flatbuffers-1.12
+  Attempting uninstall: tensorflow-estimator
+    Found existing installation: tensorflow-estimator 2.9.0
+    Uninstalling tensorflow-estimator-2.9.0:
+      Successfully uninstalled tensorflow-estimator-2.9.0
+  Attempting uninstall: keras
+    Found existing installation: keras 2.9.0
+    Uninstalling keras-2.9.0:
+      Successfully uninstalled keras-2.9.0
+  Attempting uninstall: tensorboard
+    Found existing installation: tensorboard 2.9.1
+    Uninstalling tensorboard-2.9.1:
+      Successfully uninstalled tensorboard-2.9.1
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+tensorflow 2.9.2 requires flatbuffers&lt;2,&gt;=1.12, but you have flatbuffers 23.1.4 which is incompatible.
+tensorflow 2.9.2 requires keras&lt;2.10.0,&gt;=2.9.0rc0, but you have keras 2.11.0 which is incompatible.
+tensorflow 2.9.2 requires tensorboard&lt;2.10,&gt;=2.9, but you have tensorboard 2.11.0 which is incompatible.
+tensorflow 2.9.2 requires tensorflow-estimator&lt;2.10.0,&gt;=2.9.0rc0, but you have tensorflow-estimator 2.11.0 which is incompatible.
+Successfully installed flatbuffers-23.1.4 keras-2.11.0 tensorboard-2.11.0 tensorflow-estimator-2.11.0 tensorflow-gpu-2.11.0
+</code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:35}" id="5PCjYVCXD3gX" data-outputid="5a96f8a9-3c96-4bb4-a5ae-bc2632242c17">
+        <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tf.__version__</span></code></pre></div>
+        <div class="output execute_result" data-execution_count="4">
+            <div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span><span class="st">"string"</span><span class="fu">}</span></span></code></pre></div>
+        </div>
+    </div>
+    <div class="cell code" id="6-nX-hAEYFXd">
+        <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Input, Lambda, Dense, Flatten</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Model</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications.inception_v3 <span class="im">import</span> InceptionV3</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications.inception_v3 <span class="im">import</span> preprocess_input</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.preprocessing <span class="im">import</span> image</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.preprocessing.image <span class="im">import</span> ImageDataGenerator, load_img</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> glob <span class="im">import</span> glob</span></code></pre></div>
+    </div>
+    <div class="cell code" id="puvG5NfucLAj">
+        <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+    </div>
+    <div class="cell code" id="UT_3T5KJYKuP">
+        <div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>IMAGE_SIZE <span class="op">=</span> [<span class="dv">224</span>, <span class="dv">224</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>train_path <span class="op">=</span> <span class="st">'/content/drive/MyDrive/Newcastle disease dataset/Train'</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>test_path <span class="op">=</span> <span class="st">'/content/drive/MyDrive/Newcastle disease dataset/Test'</span></span></code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="UkY44gtXcSvz" data-outputid="50a1262f-e05a-438d-a019-18f9a32149c1">
+        <div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>inception <span class="op">=</span> InceptionV3(input_shape<span class="op">=</span>IMAGE_SIZE <span class="op">+</span> [<span class="dv">3</span>], weights<span class="op">=</span><span class="st">'imagenet'</span>, include_top<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/inception_v3/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5
+87910968/87910968 [==============================] - 2s 0us/step
+</code></pre></div>
+    </div>
+    <div class="cell code" id="u5CxdMdCcrWF">
+        <div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layers <span class="kw">in</span> inception.layers:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  layers.trainable <span class="op">=</span> <span class="va">False</span></span></code></pre></div>
+    </div>
+    <div class="cell code" id="4iN6SDq9dCG8">
+        <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>folders <span class="op">=</span> glob(<span class="st">'/content/drive/MyDrive/Newcastle disease dataset/Train/*'</span>)</span></code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="Yn66ZILpdjyI" data-outputid="55252bda-7a40-4b39-b73e-baf51add2b3d">
+        <div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>folders</span></code></pre></div>
+        <div class="output execute_result" data-execution_count="8"><pre><code>['/content/drive/MyDrive/Newcastle disease dataset/Train/Newcastle disease',
+ '/content/drive/MyDrive/Newcastle disease dataset/Train/Healthy']</code></pre></div>
+    </div>
+    <div class="cell code" id="MZv7GqJLdnze">
+        <div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Flatten()(inception.output)</span></code></pre></div>
+    </div>
+    <div class="cell code" id="Q1zGvt6Hd3OW">
+        <div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> Dense(<span class="bu">len</span>(folders), activation<span class="op">=</span><span class="st">'sigmoid'</span>)(x)</span></code></pre></div>
+    </div>
+    <div class="cell code" id="ACcFoyXAem1D">
+        <div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(inputs<span class="op">=</span>inception.inputs, outputs<span class="op">=</span>prediction)</span></code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="UYkcoSuhpf-t" data-outputid="c94d97de-1b3a-46a6-f2b1-795cb045a293">
+        <div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 224, 224, 3  0           []                               
+                                )]                                                                
+                                                                                                  
+ conv2d (Conv2D)                (None, 111, 111, 32  864         ['input_1[0][0]']                
+                                )                                                                 
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 111, 111, 32  96         ['conv2d[0][0]']                 
+ alization)                     )                                                                 
+                                                                                                  
+ activation (Activation)        (None, 111, 111, 32  0           ['batch_normalization[0][0]']    
+                                )                                                                 
+                                                                                                  
+ conv2d_1 (Conv2D)              (None, 109, 109, 32  9216        ['activation[0][0]']             
+                                )                                                                 
+                                                                                                  
+ batch_normalization_1 (BatchNo  (None, 109, 109, 32  96         ['conv2d_1[0][0]']               
+ rmalization)                   )                                                                 
+                                                                                                  
+ activation_1 (Activation)      (None, 109, 109, 32  0           ['batch_normalization_1[0][0]']  
+                                )                                                                 
+                                                                                                  
+ conv2d_2 (Conv2D)              (None, 109, 109, 64  18432       ['activation_1[0][0]']           
+                                )                                                                 
+                                                                                                  
+ batch_normalization_2 (BatchNo  (None, 109, 109, 64  192        ['conv2d_2[0][0]']               
+ rmalization)                   )                                                                 
+                                                                                                  
+ activation_2 (Activation)      (None, 109, 109, 64  0           ['batch_normalization_2[0][0]']  
+                                )                                                                 
+                                                                                                  
+ max_pooling2d (MaxPooling2D)   (None, 54, 54, 64)   0           ['activation_2[0][0]']           
+                                                                                                  
+ conv2d_3 (Conv2D)              (None, 54, 54, 80)   5120        ['max_pooling2d[0][0]']          
+                                                                                                  
+ batch_normalization_3 (BatchNo  (None, 54, 54, 80)  240         ['conv2d_3[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ activation_3 (Activation)      (None, 54, 54, 80)   0           ['batch_normalization_3[0][0]']  
+                                                                                                  
+ conv2d_4 (Conv2D)              (None, 52, 52, 192)  138240      ['activation_3[0][0]']           
+                                                                                                  
+ batch_normalization_4 (BatchNo  (None, 52, 52, 192)  576        ['conv2d_4[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ activation_4 (Activation)      (None, 52, 52, 192)  0           ['batch_normalization_4[0][0]']  
+                                                                                                  
+ max_pooling2d_1 (MaxPooling2D)  (None, 25, 25, 192)  0          ['activation_4[0][0]']           
+                                                                                                  
+ conv2d_8 (Conv2D)              (None, 25, 25, 64)   12288       ['max_pooling2d_1[0][0]']        
+                                                                                                  
+ batch_normalization_8 (BatchNo  (None, 25, 25, 64)  192         ['conv2d_8[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ activation_8 (Activation)      (None, 25, 25, 64)   0           ['batch_normalization_8[0][0]']  
+                                                                                                  
+ conv2d_6 (Conv2D)              (None, 25, 25, 48)   9216        ['max_pooling2d_1[0][0]']        
+                                                                                                  
+ conv2d_9 (Conv2D)              (None, 25, 25, 96)   55296       ['activation_8[0][0]']           
+                                                                                                  
+ batch_normalization_6 (BatchNo  (None, 25, 25, 48)  144         ['conv2d_6[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_9 (BatchNo  (None, 25, 25, 96)  288         ['conv2d_9[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ activation_6 (Activation)      (None, 25, 25, 48)   0           ['batch_normalization_6[0][0]']  
+                                                                                                  
+ activation_9 (Activation)      (None, 25, 25, 96)   0           ['batch_normalization_9[0][0]']  
+                                                                                                  
+ average_pooling2d (AveragePool  (None, 25, 25, 192)  0          ['max_pooling2d_1[0][0]']        
+ ing2D)                                                                                           
+                                                                                                  
+ conv2d_5 (Conv2D)              (None, 25, 25, 64)   12288       ['max_pooling2d_1[0][0]']        
+                                                                                                  
+ conv2d_7 (Conv2D)              (None, 25, 25, 64)   76800       ['activation_6[0][0]']           
+                                                                                                  
+ conv2d_10 (Conv2D)             (None, 25, 25, 96)   82944       ['activation_9[0][0]']           
+                                                                                                  
+ conv2d_11 (Conv2D)             (None, 25, 25, 32)   6144        ['average_pooling2d[0][0]']      
+                                                                                                  
+ batch_normalization_5 (BatchNo  (None, 25, 25, 64)  192         ['conv2d_5[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_7 (BatchNo  (None, 25, 25, 64)  192         ['conv2d_7[0][0]']               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_10 (BatchN  (None, 25, 25, 96)  288         ['conv2d_10[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_11 (BatchN  (None, 25, 25, 32)  96          ['conv2d_11[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_5 (Activation)      (None, 25, 25, 64)   0           ['batch_normalization_5[0][0]']  
+                                                                                                  
+ activation_7 (Activation)      (None, 25, 25, 64)   0           ['batch_normalization_7[0][0]']  
+                                                                                                  
+ activation_10 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_10[0][0]'] 
+                                                                                                  
+ activation_11 (Activation)     (None, 25, 25, 32)   0           ['batch_normalization_11[0][0]'] 
+                                                                                                  
+ mixed0 (Concatenate)           (None, 25, 25, 256)  0           ['activation_5[0][0]',           
+                                                                  'activation_7[0][0]',           
+                                                                  'activation_10[0][0]',          
+                                                                  'activation_11[0][0]']          
+                                                                                                  
+ conv2d_15 (Conv2D)             (None, 25, 25, 64)   16384       ['mixed0[0][0]']                 
+                                                                                                  
+ batch_normalization_15 (BatchN  (None, 25, 25, 64)  192         ['conv2d_15[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_15 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_15[0][0]'] 
+                                                                                                  
+ conv2d_13 (Conv2D)             (None, 25, 25, 48)   12288       ['mixed0[0][0]']                 
+                                                                                                  
+ conv2d_16 (Conv2D)             (None, 25, 25, 96)   55296       ['activation_15[0][0]']          
+                                                                                                  
+ batch_normalization_13 (BatchN  (None, 25, 25, 48)  144         ['conv2d_13[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_16 (BatchN  (None, 25, 25, 96)  288         ['conv2d_16[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_13 (Activation)     (None, 25, 25, 48)   0           ['batch_normalization_13[0][0]'] 
+                                                                                                  
+ activation_16 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_16[0][0]'] 
+                                                                                                  
+ average_pooling2d_1 (AveragePo  (None, 25, 25, 256)  0          ['mixed0[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_12 (Conv2D)             (None, 25, 25, 64)   16384       ['mixed0[0][0]']                 
+                                                                                                  
+ conv2d_14 (Conv2D)             (None, 25, 25, 64)   76800       ['activation_13[0][0]']          
+                                                                                                  
+ conv2d_17 (Conv2D)             (None, 25, 25, 96)   82944       ['activation_16[0][0]']          
+                                                                                                  
+ conv2d_18 (Conv2D)             (None, 25, 25, 64)   16384       ['average_pooling2d_1[0][0]']    
+                                                                                                  
+ batch_normalization_12 (BatchN  (None, 25, 25, 64)  192         ['conv2d_12[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_14 (BatchN  (None, 25, 25, 64)  192         ['conv2d_14[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_17 (BatchN  (None, 25, 25, 96)  288         ['conv2d_17[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_18 (BatchN  (None, 25, 25, 64)  192         ['conv2d_18[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_12 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_12[0][0]'] 
+                                                                                                  
+ activation_14 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_14[0][0]'] 
+                                                                                                  
+ activation_17 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_17[0][0]'] 
+                                                                                                  
+ activation_18 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_18[0][0]'] 
+                                                                                                  
+ mixed1 (Concatenate)           (None, 25, 25, 288)  0           ['activation_12[0][0]',          
+                                                                  'activation_14[0][0]',          
+                                                                  'activation_17[0][0]',          
+                                                                  'activation_18[0][0]']          
+                                                                                                  
+ conv2d_22 (Conv2D)             (None, 25, 25, 64)   18432       ['mixed1[0][0]']                 
+                                                                                                  
+ batch_normalization_22 (BatchN  (None, 25, 25, 64)  192         ['conv2d_22[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_22 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_22[0][0]'] 
+                                                                                                  
+ conv2d_20 (Conv2D)             (None, 25, 25, 48)   13824       ['mixed1[0][0]']                 
+                                                                                                  
+ conv2d_23 (Conv2D)             (None, 25, 25, 96)   55296       ['activation_22[0][0]']          
+                                                                                                  
+ batch_normalization_20 (BatchN  (None, 25, 25, 48)  144         ['conv2d_20[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_23 (BatchN  (None, 25, 25, 96)  288         ['conv2d_23[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_20 (Activation)     (None, 25, 25, 48)   0           ['batch_normalization_20[0][0]'] 
+                                                                                                  
+ activation_23 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_23[0][0]'] 
+                                                                                                  
+ average_pooling2d_2 (AveragePo  (None, 25, 25, 288)  0          ['mixed1[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_19 (Conv2D)             (None, 25, 25, 64)   18432       ['mixed1[0][0]']                 
+                                                                                                  
+ conv2d_21 (Conv2D)             (None, 25, 25, 64)   76800       ['activation_20[0][0]']          
+                                                                                                  
+ conv2d_24 (Conv2D)             (None, 25, 25, 96)   82944       ['activation_23[0][0]']          
+                                                                                                  
+ conv2d_25 (Conv2D)             (None, 25, 25, 64)   18432       ['average_pooling2d_2[0][0]']    
+                                                                                                  
+ batch_normalization_19 (BatchN  (None, 25, 25, 64)  192         ['conv2d_19[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_21 (BatchN  (None, 25, 25, 64)  192         ['conv2d_21[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_24 (BatchN  (None, 25, 25, 96)  288         ['conv2d_24[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_25 (BatchN  (None, 25, 25, 64)  192         ['conv2d_25[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_19 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_19[0][0]'] 
+                                                                                                  
+ activation_21 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_21[0][0]'] 
+                                                                                                  
+ activation_24 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_24[0][0]'] 
+                                                                                                  
+ activation_25 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_25[0][0]'] 
+                                                                                                  
+ mixed2 (Concatenate)           (None, 25, 25, 288)  0           ['activation_19[0][0]',          
+                                                                  'activation_21[0][0]',          
+                                                                  'activation_24[0][0]',          
+                                                                  'activation_25[0][0]']          
+                                                                                                  
+ conv2d_27 (Conv2D)             (None, 25, 25, 64)   18432       ['mixed2[0][0]']                 
+                                                                                                  
+ batch_normalization_27 (BatchN  (None, 25, 25, 64)  192         ['conv2d_27[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_27 (Activation)     (None, 25, 25, 64)   0           ['batch_normalization_27[0][0]'] 
+                                                                                                  
+ conv2d_28 (Conv2D)             (None, 25, 25, 96)   55296       ['activation_27[0][0]']          
+                                                                                                  
+ batch_normalization_28 (BatchN  (None, 25, 25, 96)  288         ['conv2d_28[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_28 (Activation)     (None, 25, 25, 96)   0           ['batch_normalization_28[0][0]'] 
+                                                                                                  
+ conv2d_26 (Conv2D)             (None, 12, 12, 384)  995328      ['mixed2[0][0]']                 
+                                                                                                  
+ conv2d_29 (Conv2D)             (None, 12, 12, 96)   82944       ['activation_28[0][0]']          
+                                                                                                  
+ batch_normalization_26 (BatchN  (None, 12, 12, 384)  1152       ['conv2d_26[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_29 (BatchN  (None, 12, 12, 96)  288         ['conv2d_29[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_26 (Activation)     (None, 12, 12, 384)  0           ['batch_normalization_26[0][0]'] 
+                                                                                                  
+ activation_29 (Activation)     (None, 12, 12, 96)   0           ['batch_normalization_29[0][0]'] 
+                                                                                                  
+ max_pooling2d_2 (MaxPooling2D)  (None, 12, 12, 288)  0          ['mixed2[0][0]']                 
+                                                                                                  
+ mixed3 (Concatenate)           (None, 12, 12, 768)  0           ['activation_26[0][0]',          
+                                                                  'activation_29[0][0]',          
+                                                                  'max_pooling2d_2[0][0]']        
+                                                                                                  
+ conv2d_34 (Conv2D)             (None, 12, 12, 128)  98304       ['mixed3[0][0]']                 
+                                                                                                  
+ batch_normalization_34 (BatchN  (None, 12, 12, 128)  384        ['conv2d_34[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_34 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_34[0][0]'] 
+                                                                                                  
+ conv2d_35 (Conv2D)             (None, 12, 12, 128)  114688      ['activation_34[0][0]']          
+                                                                                                  
+ batch_normalization_35 (BatchN  (None, 12, 12, 128)  384        ['conv2d_35[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_35 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_35[0][0]'] 
+                                                                                                  
+ conv2d_31 (Conv2D)             (None, 12, 12, 128)  98304       ['mixed3[0][0]']                 
+                                                                                                  
+ conv2d_36 (Conv2D)             (None, 12, 12, 128)  114688      ['activation_35[0][0]']          
+                                                                                                  
+ batch_normalization_31 (BatchN  (None, 12, 12, 128)  384        ['conv2d_31[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_36 (BatchN  (None, 12, 12, 128)  384        ['conv2d_36[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_31 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_31[0][0]'] 
+                                                                                                  
+ activation_36 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_36[0][0]'] 
+                                                                                                  
+ conv2d_32 (Conv2D)             (None, 12, 12, 128)  114688      ['activation_31[0][0]']          
+                                                                                                  
+ conv2d_37 (Conv2D)             (None, 12, 12, 128)  114688      ['activation_36[0][0]']          
+                                                                                                  
+ batch_normalization_32 (BatchN  (None, 12, 12, 128)  384        ['conv2d_32[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_37 (BatchN  (None, 12, 12, 128)  384        ['conv2d_37[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_32 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_32[0][0]'] 
+                                                                                                  
+ activation_37 (Activation)     (None, 12, 12, 128)  0           ['batch_normalization_37[0][0]'] 
+                                                                                                  
+ average_pooling2d_3 (AveragePo  (None, 12, 12, 768)  0          ['mixed3[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_30 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed3[0][0]']                 
+                                                                                                  
+ conv2d_33 (Conv2D)             (None, 12, 12, 192)  172032      ['activation_32[0][0]']          
+                                                                                                  
+ conv2d_38 (Conv2D)             (None, 12, 12, 192)  172032      ['activation_37[0][0]']          
+                                                                                                  
+ conv2d_39 (Conv2D)             (None, 12, 12, 192)  147456      ['average_pooling2d_3[0][0]']    
+                                                                                                  
+ batch_normalization_30 (BatchN  (None, 12, 12, 192)  576        ['conv2d_30[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_33 (BatchN  (None, 12, 12, 192)  576        ['conv2d_33[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_38 (BatchN  (None, 12, 12, 192)  576        ['conv2d_38[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_39 (BatchN  (None, 12, 12, 192)  576        ['conv2d_39[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_30 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_30[0][0]'] 
+                                                                                                  
+ activation_33 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_33[0][0]'] 
+                                                                                                  
+ activation_38 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_38[0][0]'] 
+                                                                                                  
+ activation_39 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_39[0][0]'] 
+                                                                                                  
+ mixed4 (Concatenate)           (None, 12, 12, 768)  0           ['activation_30[0][0]',          
+                                                                  'activation_33[0][0]',          
+                                                                  'activation_38[0][0]',          
+                                                                  'activation_39[0][0]']          
+                                                                                                  
+ conv2d_44 (Conv2D)             (None, 12, 12, 160)  122880      ['mixed4[0][0]']                 
+                                                                                                  
+ batch_normalization_44 (BatchN  (None, 12, 12, 160)  480        ['conv2d_44[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_44 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_44[0][0]'] 
+                                                                                                  
+ conv2d_45 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_44[0][0]']          
+                                                                                                  
+ batch_normalization_45 (BatchN  (None, 12, 12, 160)  480        ['conv2d_45[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_45 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_45[0][0]'] 
+                                                                                                  
+ conv2d_41 (Conv2D)             (None, 12, 12, 160)  122880      ['mixed4[0][0]']                 
+                                                                                                  
+ conv2d_46 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_45[0][0]']          
+                                                                                                  
+ batch_normalization_41 (BatchN  (None, 12, 12, 160)  480        ['conv2d_41[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_46 (BatchN  (None, 12, 12, 160)  480        ['conv2d_46[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_41 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_41[0][0]'] 
+                                                                                                  
+ activation_46 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_46[0][0]'] 
+                                                                                                  
+ conv2d_42 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_41[0][0]']          
+                                                                                                  
+ conv2d_47 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_46[0][0]']          
+                                                                                                  
+ batch_normalization_42 (BatchN  (None, 12, 12, 160)  480        ['conv2d_42[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_47 (BatchN  (None, 12, 12, 160)  480        ['conv2d_47[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_42 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_42[0][0]'] 
+                                                                                                  
+ activation_47 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_47[0][0]'] 
+                                                                                                  
+ average_pooling2d_4 (AveragePo  (None, 12, 12, 768)  0          ['mixed4[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_40 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed4[0][0]']                 
+                                                                                                  
+ conv2d_43 (Conv2D)             (None, 12, 12, 192)  215040      ['activation_42[0][0]']          
+                                                                                                  
+ conv2d_48 (Conv2D)             (None, 12, 12, 192)  215040      ['activation_47[0][0]']          
+                                                                                                  
+ conv2d_49 (Conv2D)             (None, 12, 12, 192)  147456      ['average_pooling2d_4[0][0]']    
+                                                                                                  
+ batch_normalization_40 (BatchN  (None, 12, 12, 192)  576        ['conv2d_40[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_43 (BatchN  (None, 12, 12, 192)  576        ['conv2d_43[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_48 (BatchN  (None, 12, 12, 192)  576        ['conv2d_48[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_49 (BatchN  (None, 12, 12, 192)  576        ['conv2d_49[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_40 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_40[0][0]'] 
+                                                                                                  
+ activation_43 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_43[0][0]'] 
+                                                                                                  
+ activation_48 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_48[0][0]'] 
+                                                                                                  
+ activation_49 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_49[0][0]'] 
+                                                                                                  
+ mixed5 (Concatenate)           (None, 12, 12, 768)  0           ['activation_40[0][0]',          
+                                                                  'activation_43[0][0]',          
+                                                                  'activation_48[0][0]',          
+                                                                  'activation_49[0][0]']          
+                                                                                                  
+ conv2d_54 (Conv2D)             (None, 12, 12, 160)  122880      ['mixed5[0][0]']                 
+                                                                                                  
+ batch_normalization_54 (BatchN  (None, 12, 12, 160)  480        ['conv2d_54[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_54 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_54[0][0]'] 
+                                                                                                  
+ conv2d_55 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_54[0][0]']          
+                                                                                                  
+ batch_normalization_55 (BatchN  (None, 12, 12, 160)  480        ['conv2d_55[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_55 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_55[0][0]'] 
+                                                                                                  
+ conv2d_51 (Conv2D)             (None, 12, 12, 160)  122880      ['mixed5[0][0]']                 
+                                                                                                  
+ conv2d_56 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_55[0][0]']          
+                                                                                                  
+ batch_normalization_51 (BatchN  (None, 12, 12, 160)  480        ['conv2d_51[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_56 (BatchN  (None, 12, 12, 160)  480        ['conv2d_56[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_51 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_51[0][0]'] 
+                                                                                                  
+ activation_56 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_56[0][0]'] 
+                                                                                                  
+ conv2d_52 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_51[0][0]']          
+                                                                                                  
+ conv2d_57 (Conv2D)             (None, 12, 12, 160)  179200      ['activation_56[0][0]']          
+                                                                                                  
+ batch_normalization_52 (BatchN  (None, 12, 12, 160)  480        ['conv2d_52[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_57 (BatchN  (None, 12, 12, 160)  480        ['conv2d_57[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_52 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_52[0][0]'] 
+                                                                                                  
+ activation_57 (Activation)     (None, 12, 12, 160)  0           ['batch_normalization_57[0][0]'] 
+                                                                                                  
+ average_pooling2d_5 (AveragePo  (None, 12, 12, 768)  0          ['mixed5[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_50 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed5[0][0]']                 
+                                                                                                  
+ conv2d_53 (Conv2D)             (None, 12, 12, 192)  215040      ['activation_52[0][0]']          
+                                                                                                  
+ conv2d_58 (Conv2D)             (None, 12, 12, 192)  215040      ['activation_57[0][0]']          
+                                                                                                  
+ conv2d_59 (Conv2D)             (None, 12, 12, 192)  147456      ['average_pooling2d_5[0][0]']    
+                                                                                                  
+ batch_normalization_50 (BatchN  (None, 12, 12, 192)  576        ['conv2d_50[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_53 (BatchN  (None, 12, 12, 192)  576        ['conv2d_53[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_58 (BatchN  (None, 12, 12, 192)  576        ['conv2d_58[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_59 (BatchN  (None, 12, 12, 192)  576        ['conv2d_59[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_50 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_50[0][0]'] 
+                                                                                                  
+ activation_53 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_53[0][0]'] 
+                                                                                                  
+ activation_58 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_58[0][0]'] 
+                                                                                                  
+ activation_59 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_59[0][0]'] 
+                                                                                                  
+ mixed6 (Concatenate)           (None, 12, 12, 768)  0           ['activation_50[0][0]',          
+                                                                  'activation_53[0][0]',          
+                                                                  'activation_58[0][0]',          
+                                                                  'activation_59[0][0]']          
+                                                                                                  
+ conv2d_64 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed6[0][0]']                 
+                                                                                                  
+ batch_normalization_64 (BatchN  (None, 12, 12, 192)  576        ['conv2d_64[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_64 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_64[0][0]'] 
+                                                                                                  
+ conv2d_65 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_64[0][0]']          
+                                                                                                  
+ batch_normalization_65 (BatchN  (None, 12, 12, 192)  576        ['conv2d_65[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_65 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_65[0][0]'] 
+                                                                                                  
+ conv2d_61 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed6[0][0]']                 
+                                                                                                  
+ conv2d_66 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_65[0][0]']          
+                                                                                                  
+ batch_normalization_61 (BatchN  (None, 12, 12, 192)  576        ['conv2d_61[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_66 (BatchN  (None, 12, 12, 192)  576        ['conv2d_66[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_61 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_61[0][0]'] 
+                                                                                                  
+ activation_66 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_66[0][0]'] 
+                                                                                                  
+ conv2d_62 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_61[0][0]']          
+                                                                                                  
+ conv2d_67 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_66[0][0]']          
+                                                                                                  
+ batch_normalization_62 (BatchN  (None, 12, 12, 192)  576        ['conv2d_62[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_67 (BatchN  (None, 12, 12, 192)  576        ['conv2d_67[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_62 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_62[0][0]'] 
+                                                                                                  
+ activation_67 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_67[0][0]'] 
+                                                                                                  
+ average_pooling2d_6 (AveragePo  (None, 12, 12, 768)  0          ['mixed6[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_60 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed6[0][0]']                 
+                                                                                                  
+ conv2d_63 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_62[0][0]']          
+                                                                                                  
+ conv2d_68 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_67[0][0]']          
+                                                                                                  
+ conv2d_69 (Conv2D)             (None, 12, 12, 192)  147456      ['average_pooling2d_6[0][0]']    
+                                                                                                  
+ batch_normalization_60 (BatchN  (None, 12, 12, 192)  576        ['conv2d_60[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_63 (BatchN  (None, 12, 12, 192)  576        ['conv2d_63[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_68 (BatchN  (None, 12, 12, 192)  576        ['conv2d_68[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_69 (BatchN  (None, 12, 12, 192)  576        ['conv2d_69[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_60 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_60[0][0]'] 
+                                                                                                  
+ activation_63 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_63[0][0]'] 
+                                                                                                  
+ activation_68 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_68[0][0]'] 
+                                                                                                  
+ activation_69 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_69[0][0]'] 
+                                                                                                  
+ mixed7 (Concatenate)           (None, 12, 12, 768)  0           ['activation_60[0][0]',          
+                                                                  'activation_63[0][0]',          
+                                                                  'activation_68[0][0]',          
+                                                                  'activation_69[0][0]']          
+                                                                                                  
+ conv2d_72 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed7[0][0]']                 
+                                                                                                  
+ batch_normalization_72 (BatchN  (None, 12, 12, 192)  576        ['conv2d_72[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_72 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_72[0][0]'] 
+                                                                                                  
+ conv2d_73 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_72[0][0]']          
+                                                                                                  
+ batch_normalization_73 (BatchN  (None, 12, 12, 192)  576        ['conv2d_73[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_73 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_73[0][0]'] 
+                                                                                                  
+ conv2d_70 (Conv2D)             (None, 12, 12, 192)  147456      ['mixed7[0][0]']                 
+                                                                                                  
+ conv2d_74 (Conv2D)             (None, 12, 12, 192)  258048      ['activation_73[0][0]']          
+                                                                                                  
+ batch_normalization_70 (BatchN  (None, 12, 12, 192)  576        ['conv2d_70[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_74 (BatchN  (None, 12, 12, 192)  576        ['conv2d_74[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_70 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_70[0][0]'] 
+                                                                                                  
+ activation_74 (Activation)     (None, 12, 12, 192)  0           ['batch_normalization_74[0][0]'] 
+                                                                                                  
+ conv2d_71 (Conv2D)             (None, 5, 5, 320)    552960      ['activation_70[0][0]']          
+                                                                                                  
+ conv2d_75 (Conv2D)             (None, 5, 5, 192)    331776      ['activation_74[0][0]']          
+                                                                                                  
+ batch_normalization_71 (BatchN  (None, 5, 5, 320)   960         ['conv2d_71[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_75 (BatchN  (None, 5, 5, 192)   576         ['conv2d_75[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_71 (Activation)     (None, 5, 5, 320)    0           ['batch_normalization_71[0][0]'] 
+                                                                                                  
+ activation_75 (Activation)     (None, 5, 5, 192)    0           ['batch_normalization_75[0][0]'] 
+                                                                                                  
+ max_pooling2d_3 (MaxPooling2D)  (None, 5, 5, 768)   0           ['mixed7[0][0]']                 
+                                                                                                  
+ mixed8 (Concatenate)           (None, 5, 5, 1280)   0           ['activation_71[0][0]',          
+                                                                  'activation_75[0][0]',          
+                                                                  'max_pooling2d_3[0][0]']        
+                                                                                                  
+ conv2d_80 (Conv2D)             (None, 5, 5, 448)    573440      ['mixed8[0][0]']                 
+                                                                                                  
+ batch_normalization_80 (BatchN  (None, 5, 5, 448)   1344        ['conv2d_80[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_80 (Activation)     (None, 5, 5, 448)    0           ['batch_normalization_80[0][0]'] 
+                                                                                                  
+ conv2d_77 (Conv2D)             (None, 5, 5, 384)    491520      ['mixed8[0][0]']                 
+                                                                                                  
+ conv2d_81 (Conv2D)             (None, 5, 5, 384)    1548288     ['activation_80[0][0]']          
+                                                                                                  
+ batch_normalization_77 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_77[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_81 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_81[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_77 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_77[0][0]'] 
+                                                                                                  
+ activation_81 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_81[0][0]'] 
+                                                                                                  
+ conv2d_78 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_77[0][0]']          
+                                                                                                  
+ conv2d_79 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_77[0][0]']          
+                                                                                                  
+ conv2d_82 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_81[0][0]']          
+                                                                                                  
+ conv2d_83 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_81[0][0]']          
+                                                                                                  
+ average_pooling2d_7 (AveragePo  (None, 5, 5, 1280)  0           ['mixed8[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_76 (Conv2D)             (None, 5, 5, 320)    409600      ['mixed8[0][0]']                 
+                                                                                                  
+ batch_normalization_78 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_78[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_79 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_79[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_82 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_82[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_83 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_83[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ conv2d_84 (Conv2D)             (None, 5, 5, 192)    245760      ['average_pooling2d_7[0][0]']    
+                                                                                                  
+ batch_normalization_76 (BatchN  (None, 5, 5, 320)   960         ['conv2d_76[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_78 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_78[0][0]'] 
+                                                                                                  
+ activation_79 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_79[0][0]'] 
+                                                                                                  
+ activation_82 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_82[0][0]'] 
+                                                                                                  
+ activation_83 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_83[0][0]'] 
+                                                                                                  
+ batch_normalization_84 (BatchN  (None, 5, 5, 192)   576         ['conv2d_84[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_76 (Activation)     (None, 5, 5, 320)    0           ['batch_normalization_76[0][0]'] 
+                                                                                                  
+ mixed9_0 (Concatenate)         (None, 5, 5, 768)    0           ['activation_78[0][0]',          
+                                                                  'activation_79[0][0]']          
+                                                                                                  
+ concatenate (Concatenate)      (None, 5, 5, 768)    0           ['activation_82[0][0]',          
+                                                                  'activation_83[0][0]']          
+                                                                                                  
+ activation_84 (Activation)     (None, 5, 5, 192)    0           ['batch_normalization_84[0][0]'] 
+                                                                                                  
+ mixed9 (Concatenate)           (None, 5, 5, 2048)   0           ['activation_76[0][0]',          
+                                                                  'mixed9_0[0][0]',               
+                                                                  'concatenate[0][0]',            
+                                                                  'activation_84[0][0]']          
+                                                                                                  
+ conv2d_89 (Conv2D)             (None, 5, 5, 448)    917504      ['mixed9[0][0]']                 
+                                                                                                  
+ batch_normalization_89 (BatchN  (None, 5, 5, 448)   1344        ['conv2d_89[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_89 (Activation)     (None, 5, 5, 448)    0           ['batch_normalization_89[0][0]'] 
+                                                                                                  
+ conv2d_86 (Conv2D)             (None, 5, 5, 384)    786432      ['mixed9[0][0]']                 
+                                                                                                  
+ conv2d_90 (Conv2D)             (None, 5, 5, 384)    1548288     ['activation_89[0][0]']          
+                                                                                                  
+ batch_normalization_86 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_86[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_90 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_90[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_86 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_86[0][0]'] 
+                                                                                                  
+ activation_90 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_90[0][0]'] 
+                                                                                                  
+ conv2d_87 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_86[0][0]']          
+                                                                                                  
+ conv2d_88 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_86[0][0]']          
+                                                                                                  
+ conv2d_91 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_90[0][0]']          
+                                                                                                  
+ conv2d_92 (Conv2D)             (None, 5, 5, 384)    442368      ['activation_90[0][0]']          
+                                                                                                  
+ average_pooling2d_8 (AveragePo  (None, 5, 5, 2048)  0           ['mixed9[0][0]']                 
+ oling2D)                                                                                         
+                                                                                                  
+ conv2d_85 (Conv2D)             (None, 5, 5, 320)    655360      ['mixed9[0][0]']                 
+                                                                                                  
+ batch_normalization_87 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_87[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_88 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_88[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_91 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_91[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_92 (BatchN  (None, 5, 5, 384)   1152        ['conv2d_92[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ conv2d_93 (Conv2D)             (None, 5, 5, 192)    393216      ['average_pooling2d_8[0][0]']    
+                                                                                                  
+ batch_normalization_85 (BatchN  (None, 5, 5, 320)   960         ['conv2d_85[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_87 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_87[0][0]'] 
+                                                                                                  
+ activation_88 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_88[0][0]'] 
+                                                                                                  
+ activation_91 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_91[0][0]'] 
+                                                                                                  
+ activation_92 (Activation)     (None, 5, 5, 384)    0           ['batch_normalization_92[0][0]'] 
+                                                                                                  
+ batch_normalization_93 (BatchN  (None, 5, 5, 192)   576         ['conv2d_93[0][0]']              
+ ormalization)                                                                                    
+                                                                                                  
+ activation_85 (Activation)     (None, 5, 5, 320)    0           ['batch_normalization_85[0][0]'] 
+                                                                                                  
+ mixed9_1 (Concatenate)         (None, 5, 5, 768)    0           ['activation_87[0][0]',          
+                                                                  'activation_88[0][0]']          
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, 5, 5, 768)    0           ['activation_91[0][0]',          
+                                                                  'activation_92[0][0]']          
+                                                                                                  
+ activation_93 (Activation)     (None, 5, 5, 192)    0           ['batch_normalization_93[0][0]'] 
+                                                                                                  
+ mixed10 (Concatenate)          (None, 5, 5, 2048)   0           ['activation_85[0][0]',          
+                                                                  'mixed9_1[0][0]',               
+                                                                  'concatenate_1[0][0]',          
+                                                                  'activation_93[0][0]']          
+                                                                                                  
+ flatten (Flatten)              (None, 51200)        0           ['mixed10[0][0]']                
+                                                                                                  
+ dense (Dense)                  (None, 2)            102402      ['flatten[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 21,905,186
+Trainable params: 21,870,754
+Non-trainable params: 34,432
+__________________________________________________________________________________________________
+</code></pre></div>
+    </div>
+    <div class="cell code" id="l_rHD1UrqVfB">
+        <div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span><span class="st">'adam'</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span><span class="st">'accuracy'</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+    </div>
+    <div class="cell code" id="gRgLaN3Fq2rf">
+        <div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.preprocessing.image <span class="im">import</span> ImageDataGenerator</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>train_datagen <span class="op">=</span> ImageDataGenerator(rescale<span class="op">=</span><span class="fl">1.</span><span class="op">/</span><span class="dv">255</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                                   shear_range<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                                   zoom_range<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                                   horizontal_flip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>test_datagen <span class="op">=</span> ImageDataGenerator(rescale<span class="op">=</span><span class="fl">1.</span><span class="op">/</span><span class="dv">255</span>)</span></code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="C6h69UMKrxFH" data-outputid="32e5c522-a14a-45ba-d7e5-aaccbd66acfb">
+        <div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>training_set <span class="op">=</span> train_datagen.flow_from_directory(<span class="st">'/content/drive/MyDrive/Newcastle disease dataset/Train'</span>,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                                                 target_size <span class="op">=</span> (<span class="dv">224</span>, <span class="dv">224</span>),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                                 batch_size <span class="op">=</span> <span class="dv">16</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                                 class_mode <span class="op">=</span> <span class="st">'categorical'</span>)</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Found 1703 images belonging to 2 classes.
+</code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="ueWFtK0L-1Tu" data-outputid="51b82d0e-e0c0-4e0d-dd5f-5889598440b5">
+        <div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> test_datagen.flow_from_directory(<span class="st">'/content/drive/MyDrive/Newcastle disease dataset/Test'</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                                 target_size <span class="op">=</span> (<span class="dv">224</span>, <span class="dv">224</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                                 batch_size <span class="op">=</span> <span class="dv">16</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                                                 class_mode <span class="op">=</span> <span class="st">'categorical'</span>)</span></code></pre></div>
+        <div class="output stream stdout"><pre><code>Found 730 images belonging to 2 classes.
+</code></pre></div>
+    </div>
+    <div class="cell code" data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}" id="kD0ZRcHLAcLD" data-outputid="1c3a60a8-9365-49cc-866c-9e1ab502c9db">
+        <div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> model.fit_generator(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    training_set,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    validation_data<span class="op">=</span>test_set,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    steps_per_epoch<span class="op">=</span><span class="bu">len</span>(training_set),</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    validation_steps<span class="op">=</span><span class="bu">len</span>(test_set)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+        <div class="output stream stderr"><pre><code>&lt;ipython-input-21-b4b2878d2ea9&gt;:1: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
+  r = model.fit_generator(
+</code></pre></div>
+        <div class="output stream stdout"><pre><code>Epoch 1/10
+107/107 [==============================] - 248s 2s/step - loss: 1.1686 - accuracy: 0.8779 - val_loss: 2015490688.0000 - val_accuracy: 0.1548
+Epoch 2/10
+107/107 [==============================] - 29s 269ms/step - loss: 1.2832 - accuracy: 0.8291 - val_loss: 9946.0381 - val_accuracy: 0.8452
+Epoch 3/10
+107/107 [==============================] - 31s 292ms/step - loss: 1.4935 - accuracy: 0.8420 - val_loss: 78.7177 - val_accuracy: 0.8452
+Epoch 4/10
+107/107 [==============================] - 30s 282ms/step - loss: 0.6827 - accuracy: 0.8438 - val_loss: 206.4825 - val_accuracy: 0.8452
+Epoch 5/10
+107/107 [==============================] - 30s 280ms/step - loss: 0.8480 - accuracy: 0.8438 - val_loss: 1.5975 - val_accuracy: 0.8274
+Epoch 6/10
+107/107 [==============================] - 30s 279ms/step - loss: 0.4174 - accuracy: 0.8450 - val_loss: 0.4262 - val_accuracy: 0.8452
+Epoch 7/10
+107/107 [==============================] - 29s 275ms/step - loss: 0.4138 - accuracy: 0.8456 - val_loss: 0.4121 - val_accuracy: 0.8452
+Epoch 8/10
+107/107 [==============================] - 30s 276ms/step - loss: 0.3283 - accuracy: 0.8644 - val_loss: 0.3534 - val_accuracy: 0.8452
+Epoch 9/10
+107/107 [==============================] - 30s 276ms/step - loss: 0.6662 - accuracy: 0.9084 - val_loss: 6.6499 - val_accuracy: 0.8959
+Epoch 10/10
+107/107 [==============================] - 29s 273ms/step - loss: 0.5849 - accuracy: 0.9131 - val_loss: 450.6672 - val_accuracy: 0.5616
+</code></pre></div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Sample---How-to-change-text-based-on-dropdown.js"></script>
+</body>
+
+</html>
